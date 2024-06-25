@@ -1,4 +1,4 @@
-import 'package:coin_one/app/data/constants.dart';
+import 'package:coin_one/constants.dart';
 import 'package:coin_one/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

@@ -7,3 +7,5 @@ const kScaffoldBackgroundColor = Color(0xff1C1427);
 
 const kWidth = SizedBox(width: 10);
 const kHeight = SizedBox(height: 10);
+
+const BaseUrl = "https://coinoneglobal.in/teresa_trial/webtemplate.asmx";

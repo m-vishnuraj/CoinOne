@@ -1,9 +1,8 @@
+import 'package:coin_one/app/data/dio/repo/home_repo.dart';
+import 'package:coin_one/app/data/models/home_res_model.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +18,18 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  Future<List<HomeRes>> getHome() async {
+    final HomeRepo _homeRepo = HomeRepo();
+    try {
+      return await _homeRepo.getHome();
+    } catch (e) {
+      // Handle error, maybe show a snackbar
+      Get.snackbar('Error', 'Failed to fetch home data: $e');
+      return []; // Return an empty list in case of error
+    }
+  }
+
+  void logout() {
+    Get.offAllNamed('/login');
+  }
 }

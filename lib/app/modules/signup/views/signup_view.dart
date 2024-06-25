@@ -1,4 +1,4 @@
-import 'package:coin_one/app/data/constants.dart';
+import 'package:coin_one/constants.dart';
 import 'package:coin_one/app/modules/widgets/edit_text.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class SignupView extends GetView<SignupController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Signup',
                 style: TextStyle(
                   fontSize: 30,
@@ -42,16 +42,17 @@ class SignupView extends GetView<SignupController> {
                 textInputType: TextInputType.visiblePassword,
                 textEditingController: controller.passwordController,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   controller.signup();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kPrimaryColor.withOpacity(.8),
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                 ),
-                child: Text(
+                child: const Text(
                   'Signup',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
@@ -61,7 +62,7 @@ class SignupView extends GetView<SignupController> {
                 onPressed: () {
                   Get.back();
                 },
-                child: Text(
+                child: const Text(
                   'Already have an account? Login',
                   style: TextStyle(color: kPrimaryColor),
                 ),

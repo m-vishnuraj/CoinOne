@@ -1,4 +1,4 @@
-import 'package:coin_one/app/data/constants.dart';
+import 'package:coin_one/constants.dart';
 import 'package:coin_one/app/modules/login/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,11 +35,11 @@ class EditText extends StatelessWidget {
             obscureText: controller.passwordVisible.value && isPassword == true
                 ? true
                 : false,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               focusColor: kPrimaryColor,
               labelText: text,
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(12),
                 ),
@@ -50,7 +50,7 @@ class EditText extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
-              labelStyle: TextStyle(color: kPrimaryColor),
+              labelStyle: const TextStyle(color: kPrimaryColor),
               suffixIcon: isPassword && passwordVisible != null
                   ? IconButton(
                       icon: Icon(

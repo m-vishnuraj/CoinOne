@@ -1,4 +1,4 @@
-import 'package:coin_one/app/data/constants.dart';
+import 'package:coin_one/constants.dart';
 import 'package:coin_one/app/modules/widgets/edit_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +23,7 @@ class LoginView extends GetView<LoginController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Login',
                 style: TextStyle(
                   fontSize: 30,
@@ -50,9 +50,9 @@ class LoginView extends GetView<LoginController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     " keep me logged in",
-                    style: TextStyle(fontSize: 15, color: kPrimaryColor),
+                    style: const TextStyle(fontSize: 15, color: kPrimaryColor),
                   ),
                   Obx(
                     () => Checkbox(
@@ -66,16 +66,17 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   controller.login();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kPrimaryColor.withOpacity(.8),
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
                 ),
-                child: Text(
+                child: const Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
@@ -85,7 +86,7 @@ class LoginView extends GetView<LoginController> {
                 onPressed: () {
                   Get.toNamed('/signup');
                 },
-                child: Text(
+                child: const Text(
                   'Create Account!',
                   style: TextStyle(color: kPrimaryColor, fontSize: 15),
                 ),

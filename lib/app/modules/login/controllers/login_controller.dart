@@ -6,17 +6,20 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // Add this import
 
 class LoginController extends GetxController {
+  //input controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final keepMeLoggedIn = false.obs;
   final passwordVisible = true.obs;
 
+//inzialize firebase auth
   late Rx<User?> firebaseUser;
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void onInit() async {
     super.onInit();
+    // Check if user is already logged in and redirect accordingly
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? keepLoggedIn = prefs.getBool('keepLoggedIn');
     if (keepLoggedIn != null && keepLoggedIn) {
@@ -40,6 +43,7 @@ class LoginController extends GetxController {
     });
   }
 
+// set initial screen
   _setInitialScreen(User? user) {
     if (user == null) {
       Get.offAll(() => LoginView());
@@ -48,8 +52,10 @@ class LoginController extends GetxController {
     }
   }
 
+//login logic
   void loginLogic(String email, String password) async {
     try {
+      // Create user with email and password
       await auth.signInWithEmailAndPassword(email: email, password: password);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('keepLoggedIn', keepMeLoggedIn.value);
@@ -62,6 +68,7 @@ class LoginController extends GetxController {
     }
   }
 
+//validate login
   void login() {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
