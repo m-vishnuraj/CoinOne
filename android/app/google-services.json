@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "46976336661",
+    "firebase_url": "https://coinone-e5de1-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "coinone-e5de1",
+    "storage_bucket": "coinone-e5de1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46976336661:android:017bafa029ef0f5c685f1c",
+        "android_client_info": {
+          "package_name": "com.example.coin_one"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhA3GBeB4zR6fc7kpamMTLm-PMERdXEKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
