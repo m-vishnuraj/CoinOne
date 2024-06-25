@@ -24,6 +24,7 @@ class DioClient {
     required EndPoints endPoints,
     Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
+    String? queryParameters,
   }) async {
     Response response;
 
@@ -41,8 +42,12 @@ class DioClient {
     try {
       switch (endPoints.method()) {
         case HttpMethod.get:
-          response = await _dio.get("$BaseUrl/${endPoints.path()}",
-              queryParameters: data);
+          response = await _dio.get(
+            queryParameters != null
+                ? "$BaseUrl/${endPoints.path()}$queryParameters"
+                : "$BaseUrl/${endPoints.path()}",
+            queryParameters: data,
+          );
           break;
 
         case HttpMethod.post:

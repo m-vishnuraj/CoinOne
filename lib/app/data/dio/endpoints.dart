@@ -2,6 +2,7 @@ import 'package:coin_one/app/data/dio/dio_client.dart';
 
 enum EndPoints {
   home,
+  info,
 }
 
 extension EndPointsExtension on EndPoints {
@@ -11,6 +12,10 @@ extension EndPointsExtension on EndPoints {
     switch (this) {
       case EndPoints.home:
         path = "FnGetTemplateCategoryList?PrmCmpId=1&PrmBrId=2";
+        break;
+      case EndPoints.info:
+        path =
+            "FnGetTemplateSubCategoryList?PrmCmpId=1&PrmBrId=2&PrmCategoryId=";
         break;
     }
 
@@ -24,6 +29,9 @@ extension EndPointsExtension on EndPoints {
       case EndPoints.home:
         method = HttpMethod.get;
         break;
+      case EndPoints.info:
+        method = HttpMethod.get;
+        break;
     }
 
     return method;
@@ -35,6 +43,9 @@ extension EndPointsExtension on EndPoints {
     switch (this) {
       case EndPoints.home:
         hasToken = true;
+        break;
+      case EndPoints.info:
+        hasToken = false;
         break;
     }
 
