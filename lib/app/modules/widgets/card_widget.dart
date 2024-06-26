@@ -24,7 +24,7 @@ class CardWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: kSecondaryColor.withOpacity(0.1),
               borderRadius: const BorderRadius.all(
-                Radius.circular(25),
+                Radius.circular(50),
               ),
               boxShadow: [
                 BoxShadow(
@@ -46,7 +46,9 @@ class CardWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                kWidth,
+                SizedBox(
+                  width: 20,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +56,7 @@ class CardWidget extends StatelessWidget {
                     Text(
                       Name,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                         color: kPrimaryColor,
                       ),
