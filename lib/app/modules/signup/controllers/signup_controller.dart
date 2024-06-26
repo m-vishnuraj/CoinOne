@@ -59,10 +59,35 @@ class SignupController extends GetxController {
         colorText: Colors.white,
       );
       Get.offAll(() => HomeView());
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      switch (e.code) {
+        case "email-already-in-use":
+          errorMessage =
+              "The email address is already in use by another account.";
+          break;
+        case "invalid-email":
+          errorMessage = "The email address is not valid.";
+          break;
+        case "weak-password":
+          errorMessage = "The password is too weak.";
+          break;
+        default:
+          errorMessage = "An undefined error happened.";
+      }
+
+      Get.snackbar(
+        "Error",
+        errorMessage,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } catch (e) {
       Get.snackbar(
         "Error",
-        e.toString(),
+        "An unexpected error occurred. Please try again.",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,

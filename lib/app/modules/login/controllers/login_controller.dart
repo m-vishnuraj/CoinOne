@@ -55,16 +55,41 @@ class LoginController extends GetxController {
 //login logic
   void loginLogic(String email, String password) async {
     try {
-      // Create user with email and password
       await auth.signInWithEmailAndPassword(email: email, password: password);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('keepLoggedIn', keepMeLoggedIn.value);
       Get.offAll(() => HomeView());
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      switch (e.code) {
+        case "invalid-email":
+          errorMessage = "Your email address appears to be malformed.";
+          break;
+        case "invalid-credential":
+          errorMessage = "Your password is wrong.";
+          break;
+        default:
+          errorMessage = "An undefined error happened.";
+      }
+
+      Get.snackbar(
+        "Error",
+        errorMessage,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      print('Failed with error code: ${e.code}');
+      print(e.message);
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        "Error",
+        "An unexpected error occurred. Please try again.",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
