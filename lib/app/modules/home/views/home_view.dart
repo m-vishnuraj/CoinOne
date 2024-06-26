@@ -23,6 +23,17 @@ class HomeView extends GetView<HomeController> {
             fontSize: 28,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.logout,
+              color: kPrimaryColor,
+            ),
+            onPressed: () {
+              controller.logout();
+            },
+          )
+        ],
         centerTitle: true,
       ),
       body: Column(

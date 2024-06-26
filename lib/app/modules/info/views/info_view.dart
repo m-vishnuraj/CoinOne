@@ -17,6 +17,13 @@ class InfoView extends GetView<InfoController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kScaffoldBackgroundColor,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: kPrimaryColor,
+          ),
+          onPressed: () => Get.back(),
+        ),
         title: const Text(
           'Info',
           style: TextStyle(
@@ -31,72 +38,54 @@ class InfoView extends GetView<InfoController> {
         future: controller.getInfo(arg),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CardWidget(
-                      Name: 'Name',
-                      Img:
-                          'https://coinoneglobal.in/crm/UploadFiles/Template/coinone.png',
-                    ),
-                  )),
-            );
+            return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error fetching info'));
           } else if (snapshot.data == null) {
             return const Center(child: Text('No data found'));
           } else {
             final List<InfoRes> info = snapshot.data as List<InfoRes>;
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 300,
-                  width: double.infinity,
-                  child: Center(
-                    child: Image.network(
-                      'https://coinoneglobal.in/crm/UploadFiles/Template/${info[0].imgUrl}',
-                      width: 500,
-                      height: 500,
-                    ),
+            return Center(
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                width: 500,
+                height: 500,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://coinoneglobal.in/crm/UploadFiles/Template/${info[0].imgUrl}',
+                            ),
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.arrow_drop_down_circle),
+                        title: Text('Item: ${info[0].name.toString()}'),
+                        subtitle: Text(
+                          'Id: ${info[0].id.toString()}',
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          'Image Path: ${info[0].imgUrlPath.toString()}',
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Id: ${info[0].id}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
-                      ),
-                    ),
-                    kWidth,
-                    Text(
-                      'Name : ${info[0].name}',
-                      style: const TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(
-                    'imgUrlPath : ${info[0].imgUrlPath}',
-                    style: const TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             );
           }
         },

@@ -1,33 +1,54 @@
+import 'package:coin_one/app/modules/home/views/home_view.dart';
 import 'package:coin_one/app/modules/login/views/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // intlize firebase auth
+  final keepMeLoggedIn = false.obs;
+
   late Rx<User?> firebaseUser;
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? keepLoggedIn = prefs.getBool('keepLoggedIn');
+    if (keepLoggedIn != null) {
+      keepMeLoggedIn.value = keepLoggedIn;
+    }
+    if (keepMeLoggedIn.value) {
+      firebaseUser = Rx<User?>(auth.currentUser);
+      firebaseUser.bindStream(auth.userChanges());
+      ever(firebaseUser, _setInitialScreen);
+    }
   }
 
   @override
   void onReady() {
     super.onReady();
-    // Check if user is already logged in and redirect accordingly
-    firebaseUser = Rx<User?>(auth.currentUser);
-    firebaseUser.bindStream(auth.userChanges());
+    // Listen to changes in keepMeLoggedIn and save to SharedPreferences
+    ever(keepMeLoggedIn, (bool value) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('keepLoggedIn', value);
+    });
   }
 
-// Register logic
+  _setInitialScreen(User? user) {
+    if (user == null) {
+      Get.offAll(() => LoginView());
+    } else {
+      Get.offAll(() => HomeView());
+    }
+  }
+
   void register(String email, String password) async {
     try {
-      // Create user with email and password
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       Get.snackbar(
@@ -37,16 +58,17 @@ class SignupController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      Get.offAll(() => LoginView());
+      Get.offAll(() => HomeView());
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        "Error",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
-
-// validate email and password
 
   void signup() {
     final email = emailController.text.trim();
@@ -64,15 +86,12 @@ class SignupController extends GetxController {
     } else {
       register(email, password);
     }
-
-    // Add your login logic here
   }
 
   @override
   void onClose() {
     emailController.dispose();
     passwordController.dispose();
-
     super.onClose();
   }
 }
